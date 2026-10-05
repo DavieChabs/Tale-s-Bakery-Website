@@ -80,7 +80,7 @@ export function ReviewsSection({ SectionLabel }: { SectionLabel: (props: { child
               <blockquote className="border border-primary-foreground/15 p-6 sm:col-span-2">
                 <Quote className="text-accent" />
                 <p className="mt-5 font-display text-xl leading-8">
-                  No reviews yet — be the first to share your experience with Tale’s Bakery.
+                  No reviews yet — be the first to share your experience with Unique Bakery.
                 </p>
               </blockquote>
             )}

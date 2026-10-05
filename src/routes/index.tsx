@@ -36,10 +36,10 @@ import galleryChelsea from "@/assets/bakery/gallery-chelsea.jpg";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Tale's Bakery | Fresh Bakes in Glaudina" },
-      { name: "description", content: "Handcrafted cakes, pastries, cookies and fresh bakes from Tale's Bakery in Glaudina, Harare." },
-      { property: "og:title", content: "Tale's Bakery | Made With Heart" },
-      { property: "og:description", content: "Celebrate life's sweetest moments with handcrafted bakes from Tale's Bakery." },
+      { title: "Unique Bakery | Fresh Bakes in Glaudina" },
+      { name: "description", content: "Handcrafted cakes, pastries, cookies and fresh bakes from Unique Bakery in Glaudina, Harare." },
+      { property: "og:title", content: "Unique Bakery | Made With Heart" },
+      { property: "og:description", content: "Celebrate life's sweetest moments with handcrafted bakes from Unique Bakery." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -59,7 +59,7 @@ const products = [
 ];
 
 const gallery = [
-  { src: galleryCelebration, alt: "Two pink celebration cakes by Tale's Bakery", title: "Celebration, made personal", category: "Custom cakes", className: "sm:col-span-2 lg:col-span-7 lg:row-span-2", position: "object-center" },
+  { src: galleryCelebration, alt: "Two pink celebration cakes by Unique Bakery", title: "Celebration, made personal", category: "Custom cakes", className: "sm:col-span-2 lg:col-span-7 lg:row-span-2", position: "object-center" },
   { src: galleryDoughnuts, alt: "Box of chocolate and sprinkle doughnuts", title: "A dozen reasons to smile", category: "Doughnuts", className: "lg:col-span-5", position: "object-center" },
   { src: galleryChelsea, alt: "Blue Chelsea themed birthday cake", title: "Made for their biggest passion", category: "Themed cakes", className: "lg:col-span-5", position: "object-[center_35%]" },
   { src: galleryScones, alt: "Golden scones with handcrafted cakes", title: "Golden, tender, irresistible", category: "Fresh bakes", className: "sm:col-span-2 lg:col-span-5", position: "object-center" },
@@ -68,6 +68,7 @@ const gallery = [
 
 function BakeryPage() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [selectedPhoto, setSelectedPhoto] = useState<(typeof gallery)[number] | null>(null);
 
   function sendMessage(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -82,14 +83,14 @@ function BakeryPage() {
     <main className="overflow-x-hidden bg-background text-foreground">
       <header className="fixed inset-x-0 top-0 z-50 border-b border-primary-foreground/15 bg-primary/95 text-primary-foreground backdrop-blur-md">
         <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-5 lg:px-10">
-          <a href="#home" className="font-display text-2xl font-bold tracking-normal" aria-label="Tale's Bakery home">
-            Tale’s <span className="text-accent">Bakery</span>
+          <a href="#home" className="font-display text-2xl font-bold tracking-normal" aria-label="Unique Bakery home">
+            Unique <span className="pink-touch">Bakery</span>
           </a>
           <nav className="hidden items-center gap-8 md:flex" aria-label="Main navigation">
             {navLinks.map((item) => <a key={item} href={`#${item.toLowerCase()}`} className="text-sm font-semibold transition-colors hover:text-accent">{item}</a>)}
           </nav>
           <Button asChild className="hidden bg-accent text-accent-foreground hover:bg-accent/90 md:inline-flex">
-            <a href="https://wa.me/263784608402?text=Hello%20Tale's%20Bakery%2C%20I'd%20like%20to%20place%20an%20order." target="_blank" rel="noreferrer"><MessageCircle /> Order now</a>
+            <a href="https://wa.me/263784608402?text=Hello%20Unique%20Bakery%2C%20I'd%20like%20to%20place%20an%20order." target="_blank" rel="noreferrer"><MessageCircle /> Order now</a>
           </Button>
           <Button variant="ghost" size="icon" className="text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground md:hidden" onClick={() => setMenuOpen(!menuOpen)} aria-label="Toggle navigation" aria-expanded={menuOpen}>
             {menuOpen ? <X /> : <Menu />}
@@ -99,7 +100,7 @@ function BakeryPage() {
       </header>
 
       <section id="home" className="relative flex min-h-[92svh] items-end overflow-hidden pt-20">
-        <img src={heroCake} alt="White birthday cake with terracotta roses and gold detailing by Tale's Bakery" className="absolute inset-0 h-full w-full object-cover object-center" fetchPriority="high" />
+        <img src={heroCake} alt="White birthday cake with terracotta roses and gold detailing by Unique Bakery" className="absolute inset-0 h-full w-full object-cover object-center" fetchPriority="high" />
         <div className="absolute inset-0 bg-hero-overlay" />
         <div className="relative mx-auto w-full max-w-7xl px-5 pb-16 pt-32 lg:px-10 lg:pb-24">
           <div className="max-w-3xl animate-rise">
@@ -108,7 +109,7 @@ function BakeryPage() {
             <p className="mt-6 max-w-xl text-base leading-7 text-hero-muted sm:text-lg">Handcrafted cakes and comforting bakes, made fresh for everyday treats and life’s biggest celebrations.</p>
             <div className="mt-9 flex flex-wrap gap-3">
               <Button asChild size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90"><a href="#menu">Explore our menu <ArrowRight /></a></Button>
-              <Button asChild size="lg" variant="outline" className="border-hero-muted bg-transparent text-hero hover:bg-hero/10 hover:text-hero"><a href="https://wa.me/263784608402?text=Hello%20Tale's%20Bakery%2C%20I'd%20like%20to%20place%20an%20order." target="_blank" rel="noreferrer"><MessageCircle /> WhatsApp us</a></Button>
+              <Button asChild size="lg" variant="outline" className="border-hero-muted bg-transparent text-hero hover:bg-hero/10 hover:text-hero"><a href="https://wa.me/263784608402?text=Hello%20Unique%20Bakery%2C%20I'd%20like%20to%20place%20an%20order." target="_blank" rel="noreferrer"><MessageCircle /> WhatsApp us</a></Button>
             </div>
           </div>
         </div>
@@ -118,13 +119,13 @@ function BakeryPage() {
       <section id="about" className="scroll-mt-20 py-24 lg:py-32">
         <div className="mx-auto grid max-w-7xl items-center gap-14 px-5 lg:grid-cols-2 lg:px-10">
           <div className="relative mx-auto max-w-xl">
-            <img src={scones} alt="Fresh scones and cakes from Tale's Bakery" className="aspect-[4/5] w-full object-cover" loading="lazy" />
+            <img src={scones} alt="Fresh scones and cakes from Unique Bakery" className="aspect-[4/5] w-full object-cover" loading="lazy" />
             <div className="absolute -bottom-6 -right-3 bg-primary p-6 text-primary-foreground sm:-right-8"><Wheat className="mb-2 text-accent"/><p className="font-display text-xl">Made fresh</p><p className="text-xs text-primary-foreground/70">with care, every time</p></div>
           </div>
           <div className="lg:pl-10">
             <SectionLabel>Our story</SectionLabel>
             <h2 className="mt-4 font-display text-4xl leading-tight sm:text-5xl">Home-baked warmth in every bite.</h2>
-            <p className="mt-6 text-base leading-8 text-muted-foreground">At Tale’s Bakery, we believe the best memories are made around something delicious. Every cake, scone and pastry is prepared with patience, quality ingredients and a personal touch.</p>
+            <p className="mt-6 text-base leading-8 text-muted-foreground">At Unique Bakery, we believe the best memories are made around something delicious. Every cake, scone and pastry is prepared with patience, quality ingredients and a personal touch.</p>
             <p className="mt-4 text-base leading-8 text-muted-foreground">From a quiet afternoon treat to the centrepiece of a joyful celebration, we bake each order to make your moment feel truly special.</p>
             <div className="mt-8 grid grid-cols-3 gap-4 border-t border-border pt-7">
               <Stat value="Fresh" label="Made to order" /><Stat value="Local" label="Glaudina based" /><Stat value="Yours" label="Custom designs" />
@@ -151,23 +152,44 @@ function BakeryPage() {
             <div><SectionLabel>Fresh from the oven</SectionLabel><h2 className="mt-4 max-w-2xl font-display text-4xl leading-tight sm:text-5xl lg:text-6xl">Beautiful bakes deserve the spotlight.</h2></div>
             <p className="max-w-lg text-base leading-7 text-muted-foreground lg:justify-self-end">From the first swirl of buttercream to the final sprinkle, every order is made to look as memorable as it tastes.</p>
           </div>
-          <div className="mt-12 grid auto-rows-[320px] grid-cols-1 gap-4 sm:grid-cols-2 lg:auto-rows-[310px] lg:grid-cols-12">
+          <div className="mt-12 grid auto-rows-[250px] grid-cols-1 gap-4 sm:grid-cols-2 lg:auto-rows-[230px] lg:grid-cols-12">
             {gallery.map((photo) => (
-              <figure key={photo.src} className={`group relative overflow-hidden bg-primary ${photo.className}`}>
-                <img src={photo.src} alt={photo.alt} className={`h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.035] ${photo.position}`} loading="lazy" />
-                <div className="absolute inset-x-0 bottom-0 bg-gallery-caption px-5 pb-5 pt-16 text-hero transition-opacity duration-300">
-                  <p className="text-[0.65rem] font-bold uppercase tracking-[0.18em] text-accent">{photo.category}</p>
-                  <figcaption className="mt-1 font-display text-2xl font-semibold leading-tight">{photo.title}</figcaption>
+              <figure key={photo.title} className={`modern-gallery-item group ${photo.className}`}>
+                <button type="button" onClick={() => setSelectedPhoto(photo)} className="modern-gallery-button" aria-label={`View ${photo.title} full size`}>
+                  <img src={photo.src} alt={photo.alt} className={`h-full w-full object-cover ${photo.position}`} loading="lazy" />
+                  <span className="modern-gallery-sheen" />
+                  <span className="modern-gallery-view">View</span>
+                </button>
+                <div className="mt-3 flex items-start justify-between gap-4">
+                  <div>
+                    <p className="pink-touch text-[0.65rem] font-bold uppercase tracking-[0.18em]">{photo.category}</p>
+                    <figcaption className="mt-1 font-display text-xl font-semibold leading-tight">{photo.title}</figcaption>
+                  </div>
                 </div>
               </figure>
             ))}
           </div>
-          <div className="mt-4 flex flex-col items-start justify-between gap-5 bg-accent px-6 py-7 text-accent-foreground sm:flex-row sm:items-center sm:px-9">
+          <div className="pink-blush mt-4 flex flex-col items-start justify-between gap-5 px-6 py-7 text-accent-foreground sm:flex-row sm:items-center sm:px-9">
             <div><p className="font-display text-2xl font-semibold sm:text-3xl">Seen something you love?</p><p className="mt-1 text-sm opacity-80">Let’s create a bake that is uniquely yours.</p></div>
-            <Button asChild size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90"><a href="https://wa.me/263784608402?text=Hello%20Tale's%20Bakery%2C%20I%20saw%20your%20gallery%20and%20would%20love%20to%20place%20an%20order." target="_blank" rel="noreferrer"><MessageCircle /> Order on WhatsApp</a></Button>
+            <Button asChild size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90"><a href="https://wa.me/263784608402?text=Hello%20Unique%20Bakery%2C%20I%20saw%20your%20gallery%20and%20would%20love%20to%20place%20an%20order." target="_blank" rel="noreferrer"><MessageCircle /> Order on WhatsApp</a></Button>
           </div>
         </div>
       </section>
+
+      {selectedPhoto && (
+        <div className="gallery-lightbox" role="dialog" aria-modal="true" aria-label={selectedPhoto.title} onClick={() => setSelectedPhoto(null)}>
+          <button type="button" className="gallery-lightbox-close" onClick={() => setSelectedPhoto(null)} aria-label="Close full view">
+            <X size={20} />
+          </button>
+          <figure className="gallery-lightbox-content" onClick={(event) => event.stopPropagation()}>
+            <img src={selectedPhoto.src} alt={selectedPhoto.alt} className="gallery-lightbox-image" />
+            <figcaption className="gallery-lightbox-caption">
+              <span>{selectedPhoto.category}</span>
+              {selectedPhoto.title}
+            </figcaption>
+          </figure>
+        </div>
+      )}
 
       <ReviewsSection SectionLabel={SectionLabel} />
 
@@ -181,7 +203,7 @@ function BakeryPage() {
         </div>
       </section>
 
-      <footer className="bg-primary text-primary-foreground"><div className="mx-auto grid max-w-7xl gap-10 px-5 py-14 sm:grid-cols-2 lg:grid-cols-4 lg:px-10"><div className="sm:col-span-2"><p className="font-display text-3xl font-bold">Tale’s <span className="text-accent">Bakery</span></p><p className="mt-3 max-w-sm text-sm leading-6 text-primary-foreground/65">Handcrafted bakes for everyday joy and unforgettable celebrations.</p></div><div><p className="text-xs font-bold uppercase tracking-[0.18em] text-accent">Explore</p><div className="mt-4 grid gap-2 text-sm">{navLinks.map((item) => <a key={item} href={`#${item.toLowerCase()}`} className="w-fit text-primary-foreground/70 hover:text-accent">{item}</a>)}</div></div><div><p className="text-xs font-bold uppercase tracking-[0.18em] text-accent">Connect</p><div className="mt-4 flex gap-3"><a href="mailto:talenthlatywayo2@gmail.com" className="grid size-10 place-items-center border border-primary-foreground/20 hover:border-accent hover:text-accent" aria-label="Email Tale's Bakery"><Mail size={18}/></a><a href="https://wa.me/263784608402" target="_blank" rel="noreferrer" className="grid size-10 place-items-center border border-primary-foreground/20 hover:border-accent hover:text-accent" aria-label="WhatsApp Tale's Bakery"><MessageCircle size={18}/></a><a href="https://instagram.com" target="_blank" rel="noreferrer" className="grid size-10 place-items-center border border-primary-foreground/20 hover:border-accent hover:text-accent" aria-label="Instagram"><Instagram size={18}/></a></div></div></div><div className="border-t border-primary-foreground/10 px-5 py-5 text-center text-xs text-primary-foreground/55">© {new Date().getFullYear()} Tale’s Bakery. Made with care in Glaudina.</div></footer>
+      <footer className="bg-primary text-primary-foreground"><div className="mx-auto grid max-w-7xl gap-10 px-5 py-14 sm:grid-cols-2 lg:grid-cols-4 lg:px-10"><div className="sm:col-span-2"><p className="font-display text-3xl font-bold">Unique <span className="text-accent">Bakery</span></p><p className="mt-3 max-w-sm text-sm leading-6 text-primary-foreground/65">Handcrafted bakes for everyday joy and unforgettable celebrations.</p></div><div><p className="text-xs font-bold uppercase tracking-[0.18em] text-accent">Explore</p><div className="mt-4 grid gap-2 text-sm">{navLinks.map((item) => <a key={item} href={`#${item.toLowerCase()}`} className="w-fit text-primary-foreground/70 hover:text-accent">{item}</a>)}</div></div><div><p className="text-xs font-bold uppercase tracking-[0.18em] text-accent">Connect</p><div className="mt-4 flex gap-3"><a href="mailto:talenthlatywayo2@gmail.com" className="grid size-10 place-items-center border border-primary-foreground/20 hover:border-accent hover:text-accent" aria-label="Email Unique Bakery"><Mail size={18}/></a><a href="https://wa.me/263784608402" target="_blank" rel="noreferrer" className="grid size-10 place-items-center border border-primary-foreground/20 hover:border-accent hover:text-accent" aria-label="WhatsApp Unique Bakery"><MessageCircle size={18}/></a><a href="https://instagram.com" target="_blank" rel="noreferrer" className="grid size-10 place-items-center border border-primary-foreground/20 hover:border-accent hover:text-accent" aria-label="Instagram"><Instagram size={18}/></a></div></div></div><div className="border-t border-primary-foreground/10 px-5 py-5 text-center text-xs text-primary-foreground/55">© {new Date().getFullYear()} Unique Bakery. Made with care in Glaudina.</div></footer>
     </main>
   );
 }

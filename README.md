@@ -1,6 +1,6 @@
-# Tale's Bakery — Website Source
+# Unique Bakery — Website Source
 
-The complete source for the Tale's Bakery website. You can run it, edit it, and deploy it from your own laptop using VS Code.
+The complete source for the Unique Bakery website. You can run it, edit it, and deploy it from your own laptop using VS Code.
 
 ## What you need
 
