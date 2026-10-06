@@ -1,8 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import {
   ArrowRight,
   CakeSlice,
+  ChevronLeft,
+  ChevronRight,
   Clock3,
   Instagram,
   Mail,
@@ -32,6 +34,16 @@ import galleryCelebration from "@/assets/bakery/gallery-celebration.jpg";
 import galleryDoughnuts from "@/assets/bakery/gallery-doughnuts.jpg";
 import galleryScones from "@/assets/bakery/gallery-scones.jpg";
 import galleryChelsea from "@/assets/bakery/gallery-chelsea.jpg";
+import galleryButterfly from "@/assets/bakery/gallery-butterfly.jpg";
+import galleryStrawberry from "@/assets/bakery/gallery-strawberry.jpg";
+import galleryRedVelvet from "@/assets/bakery/gallery-redvelvet.jpg";
+import galleryMinimalGold from "@/assets/bakery/gallery-minimal-gold.jpg";
+import gallerySplatterGold from "@/assets/bakery/gallery-splatter-gold.jpg";
+import galleryChocDrip from "@/assets/bakery/gallery-choc-drip.jpg";
+import galleryHeartGiftbox from "@/assets/bakery/gallery-heart-giftbox.jpg";
+import galleryBlackforestSlices from "@/assets/bakery/gallery-blackforest-slices.jpg";
+import galleryCupsDrizzle from "@/assets/bakery/gallery-cups-drizzle.jpg";
+import galleryCupsCrumble from "@/assets/bakery/gallery-cups-crumble.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -64,11 +76,36 @@ const gallery = [
   { src: galleryChelsea, alt: "Blue Chelsea themed birthday cake", title: "Made for their biggest passion", category: "Themed cakes", className: "lg:col-span-5", position: "object-[center_35%]" },
   { src: galleryScones, alt: "Golden scones with handcrafted cakes", title: "Golden, tender, irresistible", category: "Fresh bakes", className: "sm:col-span-2 lg:col-span-5", position: "object-center" },
   { src: pinkCake, alt: "Pink piped birthday cake", title: "Every detail, finished by hand", category: "Birthday cakes", className: "lg:col-span-7", position: "object-center" },
+  { src: galleryButterfly, alt: "Pink two-tier cake with butterflies, a rainbow topper and gold pearls", title: "Butterflies, rainbows and birthday wishes", category: "Kids' birthday cakes", className: "sm:col-span-2 lg:col-span-6 lg:row-span-2", position: "object-top" },
+  { src: galleryStrawberry, alt: "White birthday cake topped with fresh strawberries and a gold candle", title: "Crowned in fresh strawberries", category: "Fruit cakes", className: "lg:col-span-6", position: "object-center" },
+  { src: galleryRedVelvet, alt: "Red velvet drip cake with cream rosettes and a Happy Birthday topper", title: "Dripping in red velvet romance", category: "Celebration cakes", className: "lg:col-span-6", position: "object-top" },
+  { src: galleryMinimalGold, alt: "White cake with gold leaf detailing and a Happy Birthday topper", title: "Minimal, gilded and elegant", category: "Birthday cakes", className: "lg:col-span-4", position: "object-top" },
+  { src: gallerySplatterGold, alt: "White cake with rose-gold splatter, gold baubles and fabric flowers", title: "Gold splatter, soft blooms", category: "Birthday cakes", className: "lg:col-span-4", position: "object-top" },
+  { src: galleryChocDrip, alt: "White cake with a chocolate drip and chocolate truffle border", title: "Chocolate drip, done right", category: "Drip cakes", className: "lg:col-span-4", position: "object-center" },
+  { src: galleryHeartGiftbox, alt: "Small white cake with pearl piping and a gold heart topper, boxed", title: "A little love, boxed up", category: "Mini cakes", className: "sm:col-span-2 lg:col-span-5", position: "object-top" },
+  { src: galleryBlackforestSlices, alt: "Black forest cake slices in takeaway containers", title: "Layers worth sharing", category: "Cake slices", className: "lg:col-span-7", position: "object-center" },
+  { src: galleryCupsDrizzle, alt: "Dessert cups with cream and chocolate drizzle in takeaway boxes", title: "Grab-and-go treats", category: "Dessert cups", className: "lg:col-span-6", position: "object-center" },
+  { src: galleryCupsCrumble, alt: "Dessert cups topped with chocolate crumble and chunks", title: "Crumble on top, cream below", category: "Dessert cups", className: "lg:col-span-6", position: "object-center" },
 ];
 
 function BakeryPage() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [selectedPhoto, setSelectedPhoto] = useState<(typeof gallery)[number] | null>(null);
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+
+  useEffect(() => {
+    if (lightboxIndex === null) return;
+    function handleKey(event: KeyboardEvent) {
+      if (event.key === "Escape") setLightboxIndex(null);
+      if (event.key === "ArrowRight") setLightboxIndex((i) => (i === null ? i : (i + 1) % gallery.length));
+      if (event.key === "ArrowLeft") setLightboxIndex((i) => (i === null ? i : (i - 1 + gallery.length) % gallery.length));
+    }
+    window.addEventListener("keydown", handleKey);
+    document.body.style.overflow = "hidden";
+    return () => {
+      window.removeEventListener("keydown", handleKey);
+      document.body.style.overflow = "";
+    };
+  }, [lightboxIndex]);
 
   function sendMessage(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -84,7 +121,7 @@ function BakeryPage() {
       <header className="fixed inset-x-0 top-0 z-50 border-b border-primary-foreground/15 bg-primary/95 text-primary-foreground backdrop-blur-md">
         <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-5 lg:px-10">
           <a href="#home" className="font-display text-2xl font-bold tracking-normal" aria-label="Unique Bakery home">
-            Unique <span className="pink-touch">Bakery</span>
+            Unique <span className="text-accent">Bakery</span>
           </a>
           <nav className="hidden items-center gap-8 md:flex" aria-label="Main navigation">
             {navLinks.map((item) => <a key={item} href={`#${item.toLowerCase()}`} className="text-sm font-semibold transition-colors hover:text-accent">{item}</a>)}
@@ -152,40 +189,67 @@ function BakeryPage() {
             <div><SectionLabel>Fresh from the oven</SectionLabel><h2 className="mt-4 max-w-2xl font-display text-4xl leading-tight sm:text-5xl lg:text-6xl">Beautiful bakes deserve the spotlight.</h2></div>
             <p className="max-w-lg text-base leading-7 text-muted-foreground lg:justify-self-end">From the first swirl of buttercream to the final sprinkle, every order is made to look as memorable as it tastes.</p>
           </div>
-          <div className="mt-12 grid auto-rows-[250px] grid-cols-1 gap-4 sm:grid-cols-2 lg:auto-rows-[230px] lg:grid-cols-12">
-            {gallery.map((photo) => (
-              <figure key={photo.title} className={`modern-gallery-item group ${photo.className}`}>
-                <button type="button" onClick={() => setSelectedPhoto(photo)} className="modern-gallery-button" aria-label={`View ${photo.title} full size`}>
-                  <img src={photo.src} alt={photo.alt} className={`h-full w-full object-cover ${photo.position}`} loading="lazy" />
-                  <span className="modern-gallery-sheen" />
-                  <span className="modern-gallery-view">View</span>
-                </button>
-                <div className="mt-3 flex items-start justify-between gap-4">
-                  <div>
-                    <p className="pink-touch text-[0.65rem] font-bold uppercase tracking-[0.18em]">{photo.category}</p>
-                    <figcaption className="mt-1 font-display text-xl font-semibold leading-tight">{photo.title}</figcaption>
-                  </div>
+          <div className="mt-12 grid auto-rows-[320px] grid-cols-1 gap-4 sm:grid-cols-2 lg:auto-rows-[310px] lg:grid-cols-12">
+            {gallery.map((photo, index) => (
+              <button
+                type="button"
+                key={photo.src}
+                onClick={() => setLightboxIndex(index)}
+                aria-label={`View full picture: ${photo.title}`}
+                className={`group relative block w-full appearance-none overflow-hidden border-0 bg-primary p-0 text-left ${photo.className}`}
+              >
+                <img src={photo.src} alt={photo.alt} className={`h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.035] ${photo.position}`} loading="lazy" />
+                <div className="absolute inset-x-0 bottom-0 bg-gallery-caption px-5 pb-5 pt-16 text-hero transition-opacity duration-300">
+                  <p className="text-[0.65rem] font-bold uppercase tracking-[0.18em] text-pink">{photo.category}</p>
+                  <figcaption className="mt-1 font-display text-2xl font-semibold leading-tight">{photo.title}</figcaption>
                 </div>
-              </figure>
+              </button>
             ))}
           </div>
-          <div className="pink-blush mt-4 flex flex-col items-start justify-between gap-5 px-6 py-7 text-accent-foreground sm:flex-row sm:items-center sm:px-9">
+          <div className="mt-4 flex flex-col items-start justify-between gap-5 bg-accent px-6 py-7 text-accent-foreground sm:flex-row sm:items-center sm:px-9">
             <div><p className="font-display text-2xl font-semibold sm:text-3xl">Seen something you love?</p><p className="mt-1 text-sm opacity-80">Let’s create a bake that is uniquely yours.</p></div>
             <Button asChild size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90"><a href="https://wa.me/263784608402?text=Hello%20Unique%20Bakery%2C%20I%20saw%20your%20gallery%20and%20would%20love%20to%20place%20an%20order." target="_blank" rel="noreferrer"><MessageCircle /> Order on WhatsApp</a></Button>
           </div>
         </div>
       </section>
 
-      {selectedPhoto && (
-        <div className="gallery-lightbox" role="dialog" aria-modal="true" aria-label={selectedPhoto.title} onClick={() => setSelectedPhoto(null)}>
-          <button type="button" className="gallery-lightbox-close" onClick={() => setSelectedPhoto(null)} aria-label="Close full view">
-            <X size={20} />
+      {lightboxIndex !== null && (
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 p-4 backdrop-blur-sm"
+          role="dialog"
+          aria-modal="true"
+          aria-label={gallery[lightboxIndex]?.title}
+          onClick={() => setLightboxIndex(null)}
+        >
+          <button
+            type="button"
+            onClick={() => setLightboxIndex(null)}
+            aria-label="Close full picture view"
+            className="absolute right-4 top-4 grid size-11 place-items-center rounded-full bg-white/10 text-white transition-colors hover:bg-pink hover:text-accent-foreground"
+          >
+            <X />
           </button>
-          <figure className="gallery-lightbox-content" onClick={(event) => event.stopPropagation()}>
-            <img src={selectedPhoto.src} alt={selectedPhoto.alt} className="gallery-lightbox-image" />
-            <figcaption className="gallery-lightbox-caption">
-              <span>{selectedPhoto.category}</span>
-              {selectedPhoto.title}
+          <button
+            type="button"
+            onClick={(event) => { event.stopPropagation(); setLightboxIndex((i) => (i === null ? i : (i - 1 + gallery.length) % gallery.length)); }}
+            aria-label="Previous picture"
+            className="absolute left-2 top-1/2 grid size-11 -translate-y-1/2 place-items-center rounded-full bg-white/10 text-white transition-colors hover:bg-pink hover:text-accent-foreground sm:left-4"
+          >
+            <ChevronLeft />
+          </button>
+          <button
+            type="button"
+            onClick={(event) => { event.stopPropagation(); setLightboxIndex((i) => (i === null ? i : (i + 1) % gallery.length)); }}
+            aria-label="Next picture"
+            className="absolute right-2 top-1/2 grid size-11 -translate-y-1/2 place-items-center rounded-full bg-white/10 text-white transition-colors hover:bg-pink hover:text-accent-foreground sm:right-4"
+          >
+            <ChevronRight />
+          </button>
+          <figure className="max-h-[88vh] max-w-5xl" onClick={(event) => event.stopPropagation()}>
+            <img src={gallery[lightboxIndex]?.src} alt={gallery[lightboxIndex]?.alt} className="max-h-[75vh] w-auto max-w-full object-contain" />
+            <figcaption className="mt-4 text-center text-hero">
+              <p className="text-[0.65rem] font-bold uppercase tracking-[0.18em] text-pink">{gallery[lightboxIndex]?.category}</p>
+              <p className="mt-1 font-display text-2xl font-semibold">{gallery[lightboxIndex]?.title}</p>
             </figcaption>
           </figure>
         </div>
@@ -203,12 +267,12 @@ function BakeryPage() {
         </div>
       </section>
 
-      <footer className="bg-primary text-primary-foreground"><div className="mx-auto grid max-w-7xl gap-10 px-5 py-14 sm:grid-cols-2 lg:grid-cols-4 lg:px-10"><div className="sm:col-span-2"><p className="font-display text-3xl font-bold">Unique <span className="text-accent">Bakery</span></p><p className="mt-3 max-w-sm text-sm leading-6 text-primary-foreground/65">Handcrafted bakes for everyday joy and unforgettable celebrations.</p></div><div><p className="text-xs font-bold uppercase tracking-[0.18em] text-accent">Explore</p><div className="mt-4 grid gap-2 text-sm">{navLinks.map((item) => <a key={item} href={`#${item.toLowerCase()}`} className="w-fit text-primary-foreground/70 hover:text-accent">{item}</a>)}</div></div><div><p className="text-xs font-bold uppercase tracking-[0.18em] text-accent">Connect</p><div className="mt-4 flex gap-3"><a href="mailto:talenthlatywayo2@gmail.com" className="grid size-10 place-items-center border border-primary-foreground/20 hover:border-accent hover:text-accent" aria-label="Email Unique Bakery"><Mail size={18}/></a><a href="https://wa.me/263784608402" target="_blank" rel="noreferrer" className="grid size-10 place-items-center border border-primary-foreground/20 hover:border-accent hover:text-accent" aria-label="WhatsApp Unique Bakery"><MessageCircle size={18}/></a><a href="https://instagram.com" target="_blank" rel="noreferrer" className="grid size-10 place-items-center border border-primary-foreground/20 hover:border-accent hover:text-accent" aria-label="Instagram"><Instagram size={18}/></a></div></div></div><div className="border-t border-primary-foreground/10 px-5 py-5 text-center text-xs text-primary-foreground/55">© {new Date().getFullYear()} Unique Bakery. Made with care in Glaudina.</div></footer>
+      <footer className="bg-primary text-primary-foreground"><div className="mx-auto grid max-w-7xl gap-10 px-5 py-14 sm:grid-cols-2 lg:grid-cols-4 lg:px-10"><div className="sm:col-span-2"><p className="font-display text-3xl font-bold">Unique <span className="text-accent">Bakery</span></p><p className="mt-3 max-w-sm text-sm leading-6 text-primary-foreground/65">Handcrafted bakes for everyday joy and unforgettable celebrations.</p></div><div><p className="text-xs font-bold uppercase tracking-[0.18em] text-accent">Explore</p><div className="mt-4 grid gap-2 text-sm">{navLinks.map((item) => <a key={item} href={`#${item.toLowerCase()}`} className="w-fit text-primary-foreground/70 hover:text-accent">{item}</a>)}</div></div><div><p className="text-xs font-bold uppercase tracking-[0.18em] text-accent">Connect</p><div className="mt-4 flex gap-3"><a href="mailto:talenthlatywayo2@gmail.com" className="grid size-10 place-items-center border border-primary-foreground/20 hover:border-accent hover:text-accent" aria-label="Email Unique Bakery"><Mail size={18}/></a><a href="https://wa.me/263784608402" target="_blank" rel="noreferrer" className="grid size-10 place-items-center border border-primary-foreground/20 hover:border-accent hover:text-accent" aria-label="WhatsApp Unique Bakery"><MessageCircle size={18}/></a><a href="https://instagram.com" target="_blank" rel="noreferrer" className="grid size-10 place-items-center border border-primary-foreground/20 hover:border-accent hover:text-accent" aria-label="Instagram"><Instagram size={18}/></a></div></div></div><div className="border-t border-primary-foreground/10 px-5 py-5 text-center text-xs text-primary-foreground/55">© {new Date().getFullYear()} Unique Bakery. Made with <span className="text-pink">♥</span> in Glaudina.</div></footer>
     </main>
   );
 }
 
-function SectionLabel({ children, light = false }: { children: string; light?: boolean }) { return <p className={`flex items-center gap-3 text-xs font-bold uppercase tracking-[0.2em] ${light ? "text-accent" : "text-accent-strong"}`}><span className={`h-px w-8 ${light ? "bg-accent" : "bg-accent-strong"}`}/>{children}</p>; }
+function SectionLabel({ children, light = false }: { children: string; light?: boolean }) { return <p className={`flex items-center gap-3 text-xs font-bold uppercase tracking-[0.2em] ${light ? "text-accent" : "text-accent-strong"}`}><span className="h-px w-8 bg-pink"/>{children}</p>; }
 function Stat({ value, label }: { value: string; label: string }) { return <div><p className="font-display text-xl font-bold text-primary sm:text-2xl">{value}</p><p className="mt-1 text-xs text-muted-foreground">{label}</p></div>; }
 function ContactLine({ icon, children }: { icon: React.ReactNode; children: React.ReactNode }) { return <div className="flex items-start gap-4"><span className="grid size-10 shrink-0 place-items-center bg-accent text-accent-foreground">{icon}</span><div className="pt-2 text-sm font-medium">{children}</div></div>; }
 function Field({ label, name, type, placeholder }: { label: string; name: string; type: string; placeholder: string }) { return <div><label className="block text-sm font-semibold" htmlFor={name}>{label}</label><input id={name} name={name} type={type} required placeholder={placeholder} className="mt-2 h-12 w-full border border-input bg-background px-4 text-base outline-none transition-shadow placeholder:text-muted-foreground focus:ring-2 focus:ring-ring"/></div>; }
